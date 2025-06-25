@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div className=" md:h-[90vh] flex flex-col md:flex-row-reverse justify-between items-center h-full lg:px-12 gap-10 lg:gap-20 ">
-      <div className="md:w-1/3 lg:w-1/4">
+    <div className=" md:h-[87vh] flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 lg:gap-20 ">
+      <div className="md:w-1/3 ">
         <Image
           src={ProfilePic}
           alt="Dawit Mureja profile picture"
@@ -14,7 +14,7 @@ export default function page() {
           className="rounded-full sm:w-[200px] md:w-[370px] border-2 sm:border-4 bg-gray-500"
         />
       </div>
-      <div className="flex flex-col text-slate-300 w-4/5 md:w-2/3 lg:w-2/4">
+      <div className="flex flex-col text-slate-300 w-4/5 md:w-3/4">
         <h1 className="font-bold text-center md:text-left text-2xl md:text-3xl pb-4 text-[#60a5fa] ">
           Dawit Mureja Argaw
         </h1>
@@ -28,15 +28,15 @@ export default function page() {
           KAUST. I am currently a recipient of the prestigious Jang Young Sil
           Postdoctoral Fellowship.
         </p>
-        <p className="text-center text-slate-500 md:text-left leading-relaxed">
+        <p className="text-center text-slate-500 md:text-left leading-relaxed lg:my-2">
           My research focuses on multimodal video understanding and efficient
           generative modeling, particularly for long-form media content.
         </p>
 
-        <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 mt-4">
+        <div className="flex justify-center flex-wrap  items-center gap-4 mt-4 ">
           <Link
             href="https://dawitmureja.github.io/cv/cv_dawit.pdf"
-            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-6 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
+            className="flex gap-2 border-2 border-[#60a5fa] text-slate-200 rounded-lg px-4 py-2 bg-[#60a5fa]/50 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -48,7 +48,7 @@ export default function page() {
           </Link>
           <Link
             href="https://www.linkedin.com/in/dawit-mureja-argaw-6b891911b/"
-            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-6 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
+            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-4 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -63,7 +63,7 @@ export default function page() {
 
           <Link
             href="https://scholar.google.co.kr/citations?user=7occo28AAAAJ&hl=en"
-            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-6 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
+            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-4 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -79,7 +79,7 @@ export default function page() {
 
           <Link
             href="mailto:dawitmureja@kaist.ac.kr"
-            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-6 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
+            className="flex gap-2 border-2 border-[#60a5fa] text-[#60a5fa] rounded-lg px-4 py-2 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

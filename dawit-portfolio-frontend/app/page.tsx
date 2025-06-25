@@ -1,6 +1,7 @@
 import About from "./about/page";
 import News from "./news/page";
 import Publications from "./publications/page";
+import Awards from "./awards/page";
 import Services from "./academic_services/page";
 import Experiences from "./experience/page";
 
@@ -10,8 +11,9 @@ export default function page() {
       <About />
       <News />
       <Publications />
-      <Services />
+      <Awards />
       <Experiences />
+      <Services />
     </div>
   );
 }

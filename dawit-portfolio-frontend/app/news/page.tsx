@@ -1,7 +1,11 @@
 export default function page() {
+  interface News{
+    date: string;
+    description: string;
+  }
   return (
-    <div style={{height:'500px'}}>
-      News
-    </div>
-  )
+    <section className="flex items-center justify-center h-[60vh] bg-gray-800/25 rounded-4xl my-12">
+      
+    </section>
+  );
 }

@@ -4,7 +4,7 @@
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 interface NavLink {
   name: string;
@@ -13,7 +13,6 @@ interface NavLink {
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isClient, setIsClient] = useState(false);
 
   const isLinkActive = (basePath: string) => {
     if (basePath === "/") {
@@ -26,8 +25,9 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "News", path: "/news" },
     { name: "Publications", path: "/publications" },
-    { name: "Services", path: "/academic_services" },
+    { name: "Awards", path: "/awards" },
     { name: "Experience", path: "/experience" },
+    { name: "Services", path: "/academic_services" },
   ];
 
   return (

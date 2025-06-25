@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${roboto.variable} ${robotoMono.variable}`}>
         <Navbar />
-        <main className="pt-20 px-12 py-4 bg-gray-900">{children}</main>
+        <main className="pt-20 sm:px-12 py-4 bg-gray-900">{children}</main>
       </body>
     </html>
   );
