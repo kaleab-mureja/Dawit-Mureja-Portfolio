@@ -1,6 +1,6 @@
 import Navbar from "@/components/header/Navbar";
 import About from "./about/page";
-import News from "./news/page";
+import News from "./education/page";
 import Publications from "./publications/page";
 import Awards from "./awards/page";
 import Services from "./academic_services/page";

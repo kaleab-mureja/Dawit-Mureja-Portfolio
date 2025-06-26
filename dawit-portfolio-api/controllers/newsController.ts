@@ -4,7 +4,7 @@ import News, { INews } from "../models/News";
 // GET all News
 export const getAllNews = async (req: Request, res: Response) => {
   try {
-    const allNews: INews[] = await News.find({}).sort({ createdAt: -1 });
+    const allNews: INews[] = await News.find({});
     res.status(200).json(allNews);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
