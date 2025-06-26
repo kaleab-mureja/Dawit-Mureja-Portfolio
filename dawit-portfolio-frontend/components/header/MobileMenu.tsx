@@ -75,7 +75,7 @@ export default function MobileMenu({
           {navLinks.map((link) => (
             <li key={link.name} className="w-full">
               <Link
-                href={link.path}
+                href={`/#${link.path}`}
                 className={`
                     block px-6 py-3 text-lg transition duration-300 ease-in-out w-full text-left
                     ${

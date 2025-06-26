@@ -483,7 +483,7 @@ async function seedDatabase() {
     await mongoose.connect(mongoUri);
     console.log("MongoDB Atlas connected successfully for seeding!");
 
-    // Clear existing data for all collections
+    // Clearing existing data for all collections
     await News.deleteMany({});
     await Publication.deleteMany({});
     await Award.deleteMany({});
@@ -491,46 +491,27 @@ async function seedDatabase() {
     await Education.deleteMany({});
     await Service.deleteMany({});
 
-    // Insert new data for all collections
-    const insertedNews = await News.insertMany(newsSeedData);
-    console.log(`${insertedNews.length} news items inserted successfully!`);
-
-    const insertedPublications = await Publication.insertMany(
-      publicationsSeedData
-    );
-    console.log(
-      `${insertedPublications.length} publications inserted successfully!`
-    );
-
-    const insertedAwards = await Award.insertMany(awardsSeedData);
-    console.log(`${insertedAwards.length} awards inserted successfully!`);
-
-    const insertedWorkExperiences = await Experience.insertMany(
-      workExperiencesSeedData
-    );
-    console.log(
-      `${insertedWorkExperiences.length} work experience entries inserted successfully!`
-    );
-
-    const insertedEducation = await Education.insertMany(educationSeedData);
-    console.log(
-      `${insertedEducation.length} education entries inserted successfully!`
-    );
-
-    const insertedServices = await Service.insertMany(serviceSeedData);
-    console.log(
-      `${insertedServices.length} service entries inserted successfully!`
-    );
+    // Inserting new data for all collections
+    await News.insertMany(newsSeedData);
+    await Publication.insertMany(publicationsSeedData);
+    await Award.insertMany(awardsSeedData);
+    await Experience.insertMany(workExperiencesSeedData);
+    await Education.insertMany(educationSeedData);
+    await Service.insertMany(serviceSeedData);
 
     console.log("Database seeding complete.");
   } catch (error: any) {
     if (error.code === 11000) {
       console.error(
-        "Seeding error: Duplicate key error. Some items may already exist due to unique constraints."
+        "Seeding error: Duplicate key error. This typically means there's a unique constraint violated in your data or schema."
+      );
+      console.error(
+        "The error details above indicate the specific field (e.g., 'title') that caused it."
       );
     } else {
       console.error(`Error during seeding: ${error.message}`);
     }
+    console.error("Full error details:", error);
   } finally {
     await mongoose.disconnect();
     console.log("MongoDB disconnected.");

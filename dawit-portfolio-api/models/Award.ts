@@ -1,7 +1,6 @@
 // src/models/Award.ts
 import mongoose, { Document, Schema } from "mongoose";
 
-// 1. Define the TypeScript Interface
 export interface IAward extends Document {
   title: string;
   awardingBody: string;
@@ -10,13 +9,11 @@ export interface IAward extends Document {
   updatedAt: Date;
 }
 
-// 2. Define the Mongoose Schema
 const AwardSchema: Schema = new Schema(
   {
     title: {
       type: String,
       required: [true, "Award title is required."],
-      unique: true, // Assuming award titles are unique per individual
       trim: true,
       minlength: [3, "Award title must be at least 3 characters long."],
     },
@@ -30,15 +27,16 @@ const AwardSchema: Schema = new Schema(
       type: Number,
       required: [true, "Award year is required."],
       min: [1900, "Year must be after 1900."],
-      max: [new Date().getFullYear() + 1, "Year cannot be in the future."], // Awards are typically in the past or current year
+      max: [new Date().getFullYear() + 1, "Year cannot be in the future."],
     },
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt fields automatically
+    timestamps: true,
   }
 );
 
-// 3. Create and Export the Mongoose Model
+AwardSchema.index({ title: 1, year: 1, awardingBody: 1 }, { unique: true });
+
 const Award = mongoose.model<IAward>("Award", AwardSchema);
 
 export default Award;

@@ -16,7 +16,8 @@ export default function Navbar() {
 
   const updateHash = useCallback(() => {
     if (typeof window !== "undefined") {
-      setCurrentHash(window.location.hash);
+      const newHash = window.location.hash;
+      setCurrentHash(newHash);
     }
   }, []);
 
@@ -27,7 +28,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener("hashchange", updateHash);
     };
-  }, [updateHash, pathname]);
+  }, [updateHash]);
 
   const isLinkActive = (sectionId: string) => {
     return pathname === "/" && currentHash === `#${sectionId}`;
@@ -52,17 +53,16 @@ export default function Navbar() {
 
       <ul className="hidden md:flex bg-gray-400/25 rounded-lg md:mx-auto px-1 py-1 gap-x-2">
         {navLinks.map((link) => (
-          <li
-            key={link.name}
-            className={`${
-              isLinkActive(link.path)
-                ? "px-4 py-2 bg-gray-300/80 text-black rounded-md "
-                : "px-4 py-2 text-bold text-gray-300 transition-all duration-300 ease-in-out hover:text-[#60a5fa]"
-            }`}>
-            <Link href={`/#${link.path}`} scroll={true}>
+            <Link key={link.name}
+              className={`${
+                isLinkActive(link.path)
+                  ? "px-4 py-2 bg-gray-300/80 text-black rounded-md "
+                  : "px-4 py-2 text-bold text-gray-300 transition-all duration-300 ease-in-out hover:text-[#60a5fa]"
+              }`}
+              href={`/#${link.path}`}
+              scroll={true}>
               {link.name}
             </Link>
-          </li>
         ))}
       </ul>
 

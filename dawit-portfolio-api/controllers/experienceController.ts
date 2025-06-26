@@ -1,5 +1,5 @@
 import { Request, Response } from "express-serve-static-core";
-import Experience, { IExperience } from "../models/Experience"; // Adjust path if necessary
+import Experience, { IExperience } from "../models/Experience"; 
 
 // GET all Experiences
 export const getAllExperiences = async (req: Request, res: Response) => {

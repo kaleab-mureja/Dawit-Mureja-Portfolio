@@ -2,12 +2,53 @@ import Image from "next/image";
 import ProfilePic from "@/public/profilePic.jpg";
 import Link from "next/link";
 
-export default function page() {
+// Define the interface for Education Data
+interface EducationEntry {
+  _id: string;
+  degree: string;
+  university: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  gpa?: string;
+  thesis?: string;
+  advisors?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Data fetching function - runs on the server
+async function getEducationData(): Promise<EducationEntry[]> {
+  const API_URL = process.env.EDUCATION_URI;
+
+  if (!API_URL) {
+    console.error("EDUCATION_URI is not defined in .env");
+    return [];
+  }
+
+  try {
+    const res = await fetch(`${API_URL}`);
+
+    if (!res.ok) {
+      throw new Error(
+        `Failed to fetch education data: ${res.statusText} (Status: ${res.status})`
+      );
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching education data:", error);
+    return [];
+  }
+}
+
+export default async function page() {
+  const educationData = await getEducationData();
   return (
     <div
       id="about"
-      className=" md:h-[87vh] flex flex-col justify-between items-center gap-10 ">
-      <div className="flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 lg:gap-20 ">
+      className="flex flex-col justify-center items-center gap-10 pt-20 md:pt-40">
+      <div className=" md:h-[70vh] flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 lg:gap-20 ">
+        <div className="hidden lg:block"></div>
         <div className="md:w-1/3 ">
           <Image
             src={ProfilePic}
@@ -96,9 +137,51 @@ export default function page() {
         </div>
         <div className="hidden lg:block"></div>
       </div>
-      <section className="h-[10vh]bg-gray-800/25 rounded-4xl my-12">
-        <h1>Education</h1>
-        <div className="flex justify-between item-center"></div>
+      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
+        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+          Education
+        </h1>
+        {educationData.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
+            {educationData.map((entry) => (
+              <div
+                key={entry._id}
+                className="
+            bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-900
+            transform transition-all duration-300 ease-in-out
+            hover:shadow-2xl hover:bg-gray-900 hover:scale-[1.02] hover:border-blue-900
+          ">
+                <h2 className="text-md font-bold text-blue-300 mb-1">
+                  {entry.degree}
+                </h2>
+                <p className="text-sm text-gray-200 ">
+                  {entry.university} - {entry.location}
+                </p>
+                <p className="text-xs text-gray-400">
+                  {entry.startDate} - {entry.endDate}
+                </p>
+                {entry.gpa && (
+                  <p className="text-xs text-gray-400">GPA: {entry.gpa}</p>
+                )}
+                {entry.thesis && (
+                  <p className="text-xs text-gray-400">
+                    Dissertation: {entry.thesis}
+                  </p>
+                )}
+                {entry.advisors && entry.advisors.length > 0 && (
+                  <p className="text-xs text-gray-400">
+                    Advisors: {entry.advisors.join(", ")}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
+            Loading education data or no data available. Please ensure your
+            backend API is running and accessible.
+          </p>
+        )}
       </section>
     </div>
   );

@@ -10,7 +10,7 @@ export default function Homepage() {
   return (
     <main className="flex flex-col justify-between item-center">
       <Navbar />
-      <section className="pt-20">
+      <section>
         <About />
         <News />
         <Publications />
