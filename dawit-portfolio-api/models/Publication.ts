@@ -1,18 +1,33 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+// 1. Define the TypeScript interface for the Publication document
 export interface IPublication extends Document {
+  image?: string; // New image field, optional, storing a URL
   title: string;
-  authors: string[]; 
-  conferenceOrJournal: string; 
+  authors: string[];
+  conferenceOrJournal: string;
   year: number;
-  pdfLink?: string; 
-  codeLink?: string; 
+  pdfLink?: string;
+  codeLink?: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
+// 2. Define the Mongoose Schema for the Publication
 const PublicationSchema: Schema = new Schema(
   {
+    image: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: function (v?: string) {
+          if (!v) return true; // Optional, so allow undefined/empty
+          // Basic URL regex validation to ensure it's a valid link
+          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid URL for Image!`,
+      },
+    },
     title: {
       type: String,
       required: [true, "Publication title is required."],

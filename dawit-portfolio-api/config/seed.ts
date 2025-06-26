@@ -5,7 +5,7 @@ import Publication, { IPublication } from "../models/Publication";
 import Award, { IAward } from "../models/Award";
 import Experience, { IExperience } from "../models/Experience";
 import Education, { IEducation } from "../models/Education";
-import Service, { IService } from "../models/Service"; 
+import Service, { IService } from "../models/Service";
 
 dotenv.config();
 
@@ -38,6 +38,7 @@ const newsSeedData: Partial<INews>[] = [
 
 const publicationsSeedData: Partial<IPublication>[] = [
   {
+    image: "https://placehold.co/400x250/A3E635/000?text=MambaVision",
     title:
       "MambaVision for Discrete Video Tokenization with Channel-Split Quantization",
     authors: [
@@ -51,6 +52,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     year: 2025,
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/iclr_2025.png",
     title: "High-Quality Joint Image and Video Tokenization with Causal VAE",
     authors: [
       "Dawit Mureja Argaw",
@@ -66,6 +68,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://openreview.net/pdf?id=aRD1NqcXTC",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/cvpr_2024_1.PNG",
     title:
       "Scaling Up Video Summarization Pretraining with Large Language Models",
     authors: [
@@ -84,6 +87,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2404.03398.pdf",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/cvpr_2024_2.png",
     title: "Towards Automated Movie Trailer Generation",
     authors: [
       "Dawit Mureja Argaw",
@@ -100,6 +104,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2404.03398.pdf",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/iccv_2023_2.png",
     title: "Long-range Multimodal Pretraining for Movie Understanding",
     authors: [
       "Dawit Mureja Argaw",
@@ -114,6 +119,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     codeLink: "https://github.com/dawitmureja/LMP",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/eccv2022.jpg",
     title:
       "The Anatomy of Video Editing: A Dataset and Benchmark Suite for AI-Assisted Video Editing",
     authors: [
@@ -129,6 +135,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     codeLink: "https://github.com/dawitmureja/AVE",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/2022_cvpr.png",
     title: "Long-term Video Frame Interpolation via Feature Propagation",
     authors: ["Dawit Mureja Argaw", "In So Kweon"],
     conferenceOrJournal:
@@ -137,6 +144,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2203.15427",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/2021_aaai_interp.png",
     title: "Motion-blurred Video Interpolation and Extrapolation",
     authors: [
       "Dawit Mureja Argaw",
@@ -150,6 +158,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2103.02984",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/2021_aaai_flow2.png",
     title: "Optical Flow Estimation from a Single Motion-blurred Image",
     authors: [
       "Dawit Mureja Argaw",
@@ -164,6 +173,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2103.02996",
   },
   {
+    image: "https://dawitmureja.github.io/papers/images/cvprw_2021.png",
     title:
       "Blurry Video Compression: A Trade-off between Visual Enhancement and Data Compression",
     authors: ["Dawit Mureja Argaw", "Junsik Kim", "In So Kweon"],
@@ -173,6 +183,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2311.04430",
   },
   {
+    image: "https://placehold.co/400x250/BA55D3/000?text=Video+Restoration", // Placeholder image
     title:
       "Restoration of Video Frames from a Single Blurred Image with Motion Understanding",
     authors: [
@@ -188,6 +199,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2104.09134",
   },
   {
+    image: "https://placehold.co/400x250/FFD700/000?text=VQA+Adapters", // Placeholder image
     title:
       "Empirical Study on Using Adapters for Debiased Visual Question Answering",
     authors: [
@@ -203,6 +215,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://www.sciencedirect.com/science/article/abs/pii/S1077314223002229",
   },
   {
+    image: "https://placehold.co/400x250/20B2AA/000?text=LEMMS", // Placeholder image
     title: "LEMMS: Label Estimation of Multi-feature Movie Segments",
     authors: ["Bartolomeo Vacchetti", "Dawit Mureja Argaw", "Tania Cequtelli"],
     conferenceOrJournal:
@@ -212,6 +225,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://openaccess.thecvf.com/content/ICCV2023W/CVEU/papers/Vacchetti_LEMMS_Label_Estimation_of_Multi-Feature_Movie_Segments_ICCVW_2023_paper.pdf",
   },
   {
+    image: "https://placehold.co/400x250/4B0082/000?text=ResNet+Shortcuts", // Placeholder image
     title: "ResNet or DenseNet: Introducing Shortcuts to ResNet",
     authors: [
       "Chaoning Zhang",
@@ -230,6 +244,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://openaccess.thecvf.com/content/WACV2021/papers/Zhang_ResNet_or_DenseNet_Introducing_Dense_Shortcuts_to_ResNet_WACV_2021_paper.pdf",
   },
   {
+    image: "https://placehold.co/400x250/ADFF2F/000?text=DeePTZ", // Placeholder image
     title: "DeePTZ: Deep Self-Calibration for PTZ Cameras",
     authors: [
       "Chaoning Zhang",
@@ -246,6 +261,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://openaccess.thecvf.com/content_WACV_2020/papers/Zhang_DeepPTZ_Deep_Self-Calibration_for_PTZ_Cameras_WACV_2020_paper.pdf",
   },
   {
+    image: "https://placehold.co/400x250/FA8072/000?text=Nonlinear+Shortcuts", // Placeholder image
     title: "Revisiting Residual Networks with Nonlinear Shortcuts",
     authors: [
       "Chaoning Zhang",
@@ -262,6 +278,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://bmvc2019.org/wp-content/uploads/papers/0740-paper.pdf",
   },
   {
+    image: "https://placehold.co/400x250/663399/000?text=Spine+Segmentation", // Placeholder image
     title:
       "Automatic Spine Segmentation from CT Images Using Convolutional Neural Network via Redundant Generation of Class Labels",
     authors: ["Dawit Mureja Argaw", "Malinda Vania", "Deukhee Lee"],
@@ -472,7 +489,7 @@ async function seedDatabase() {
     await Award.deleteMany({});
     await Experience.deleteMany({});
     await Education.deleteMany({});
-    await Service.deleteMany({}); 
+    await Service.deleteMany({});
 
     // Insert new data for all collections
     const insertedNews = await News.insertMany(newsSeedData);
@@ -500,10 +517,10 @@ async function seedDatabase() {
       `${insertedEducation.length} education entries inserted successfully!`
     );
 
-    const insertedServices = await Service.insertMany(serviceSeedData); // NEW: Insert Service data
+    const insertedServices = await Service.insertMany(serviceSeedData);
     console.log(
       `${insertedServices.length} service entries inserted successfully!`
-    ); // NEW: Log Service insertion
+    );
 
     console.log("Database seeding complete.");
   } catch (error: any) {

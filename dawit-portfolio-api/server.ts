@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
-import cors from 'cors'; // Added CORS import
+import cors from "cors"; // Added CORS import
 import awardRoutes from "./routes/awardRoute";
 import educationRoutes from "./routes/educationRoute";
 import experienceRoutes from "./routes/experienceRoute";
 import newsRoutes from "./routes/newsRoute";
-import publicationRoutes from "./routes/publicationRoute"
+import publicationRoutes from "./routes/publicationRoute";
 import serviceRoutes from "./routes/serviceRoute";
 import connectDB from "./config/db";
 

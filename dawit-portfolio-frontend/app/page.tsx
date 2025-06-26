@@ -1,3 +1,4 @@
+import Navbar from "@/components/header/Navbar";
 import About from "./about/page";
 import News from "./news/page";
 import Publications from "./publications/page";
@@ -7,13 +8,16 @@ import Experiences from "./experience/page";
 
 export default function Homepage() {
   return (
-    <div className="flex flex-col justify-between item-center">
-      <About />
-      <News />
-      <Publications />
-      <Awards />
-      <Experiences />
-      <Services />
-    </div>
+    <main className="flex flex-col justify-between item-center">
+      <Navbar />
+      <section className="pt-20">
+        <About />
+        <News />
+        <Publications />
+        <Awards />
+        <Experiences />
+        <Services />
+      </section>
+    </main>
   );
 }

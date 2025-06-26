@@ -1,5 +1,5 @@
 import { Request, Response } from "express-serve-static-core";
-import Publication, { IPublication } from "../models/Publication"
+import Publication, { IPublication } from "../models/Publication";
 
 // GET all Publications
 export const getAllPublications = async (req: Request, res: Response) => {
@@ -11,7 +11,9 @@ export const getAllPublications = async (req: Request, res: Response) => {
     });
     res.status(200).json(allPublications);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    // Log the error for debugging purposes
+    console.error("Error fetching all publications:", error);
+    res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 };
 
@@ -26,15 +28,33 @@ export const getPublicationById = async (req: Request, res: Response) => {
     }
     res.status(200).json(publicationItem);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    // Log the error for debugging purposes
+    console.error(
+      `Error fetching publication with ID ${req.params.id}:`,
+      error
+    );
+    // Check for invalid ID format (e.g., CastError)
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid Publication ID format" });
+    }
+    res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 };
 
 // POST a new Publication
 export const createPublication = async (req: Request, res: Response) => {
-  const { title, authors, conferenceOrJournal, year, pdfLink, codeLink } =
-    req.body;
+  const {
+    image, // Include the new image field
+    title,
+    authors,
+    conferenceOrJournal,
+    year,
+    pdfLink,
+    codeLink,
+  } = req.body;
+
   const newPublicationItem: IPublication = new Publication({
+    image, // Assign the image field
     title,
     authors,
     conferenceOrJournal,
@@ -47,22 +67,48 @@ export const createPublication = async (req: Request, res: Response) => {
     const savedPublicationItem: IPublication = await newPublicationItem.save();
     res.status(201).json(savedPublicationItem);
   } catch (error: any) {
+    // Log the error for debugging purposes
+    console.error("Error creating publication:", error);
     if (error.code === 11000) {
       // MongoDB duplicate key error (if title is unique)
       return res
         .status(409)
         .json({ message: "Publication with this title already exists." });
     }
-    res.status(400).json({ message: error.message });
+    // Mongoose validation errors
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map(
+        (err: any) => err.message
+      );
+      return res
+        .status(400)
+        .json({ message: "Validation failed", errors: messages });
+    }
+    res.status(400).json({ message: error.message || "Bad Request" });
   }
 };
 
 // UPDATE a Publication by ID (using PATCH for partial updates)
 export const updatePublication = async (req: Request, res: Response) => {
   try {
-    const { title, authors, conferenceOrJournal, year, pdfLink, codeLink } =
-      req.body;
+    const {
+      image, // Include the new image field
+      title,
+      authors,
+      conferenceOrJournal,
+      year,
+      pdfLink,
+      codeLink,
+    } = req.body;
     const updateData: Partial<IPublication> = {};
+
+    // Add image to updateData if provided or explicitly set to null
+    if (image !== undefined) {
+      updateData.image = image;
+    } else if ("image" in req.body && image === null) {
+      // If image is explicitly sent as null, set to undefined to clear it in DB
+      updateData.image = undefined;
+    }
 
     if (title !== undefined) updateData.title = title;
     if (authors !== undefined) updateData.authors = authors;
@@ -95,7 +141,30 @@ export const updatePublication = async (req: Request, res: Response) => {
     }
     res.status(200).json(updatedPublicationItem);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    // Log the error for debugging purposes
+    console.error(
+      `Error updating publication with ID ${req.params.id}:`,
+      error
+    );
+    if (error.code === 11000) {
+      return res
+        .status(409)
+        .json({ message: "Publication with this title already exists." });
+    }
+    // Mongoose validation errors
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map(
+        (err: any) => err.message
+      );
+      return res
+        .status(400)
+        .json({ message: "Validation failed", errors: messages });
+    }
+    // Check for invalid ID format (e.g., CastError)
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid Publication ID format" });
+    }
+    res.status(400).json({ message: error.message || "Bad Request" });
   }
 };
 
@@ -109,6 +178,15 @@ export const deletePublication = async (req: Request, res: Response) => {
     }
     res.status(200).json({ message: "Publication deleted successfully" });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    // Log the error for debugging purposes
+    console.error(
+      `Error deleting publication with ID ${req.params.id}:`,
+      error
+    );
+    // Check for invalid ID format (e.g., CastError)
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid Publication ID format" });
+    }
+    res.status(500).json({ message: error.message || "Internal Server Error" });
   }
 };
