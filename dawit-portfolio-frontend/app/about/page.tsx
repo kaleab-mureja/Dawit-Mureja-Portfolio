@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div className=" md:h-[87vh] flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 lg:gap-20 ">
+    <section id="about" className=" md:h-[87vh] flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 lg:gap-20 ">
       <div className="md:w-1/3 ">
         <Image
           src={ProfilePic}
@@ -92,6 +92,6 @@ export default function page() {
         </div>
       </div>
       <div className="hidden lg:block"></div>
-    </div>
+    </section>
   );
 }

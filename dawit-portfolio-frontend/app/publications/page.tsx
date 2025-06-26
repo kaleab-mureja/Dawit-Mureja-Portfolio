@@ -1,3 +1,3 @@
 export default function page() {
-  return <div style={{height:'500px'}}>Publications</div>;
+  return <section id="publications" style={{height:'500px'}}>Publications</section>;
 }

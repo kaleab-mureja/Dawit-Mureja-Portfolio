@@ -1,7 +1,7 @@
 export default function page() {
   return (
-    <div style={{height:'500px'}}>
+    <section id="experience" style={{height:'500px'}}>
       Experience 
-    </div>
+    </section>
   )
 }

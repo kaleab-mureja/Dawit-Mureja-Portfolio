@@ -1,7 +1,7 @@
 export default function page() {
   return (
-    <div style={{height:'500px'}}>
+    <section id="awards" style={{height:'500px'}}>
       Awards
-    </div>
+    </section>
   )
 }

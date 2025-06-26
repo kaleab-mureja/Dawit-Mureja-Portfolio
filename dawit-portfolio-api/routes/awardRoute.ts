@@ -7,6 +7,8 @@ import {
   deleteAward,
 } from "../controllers/awardController"; 
 
+const router = Router();
+
 router.get("/", getAllAwards);
 router.get("/:id", getAwardById);
 router.post("/", createAward);

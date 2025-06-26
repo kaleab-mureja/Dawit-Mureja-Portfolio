@@ -1,10 +1,9 @@
-// components/Navbar.tsx
 "use client";
 
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 interface NavLink {
   name: string;
@@ -13,21 +12,34 @@ interface NavLink {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [currentHash, setCurrentHash] = useState("");
 
-  const isLinkActive = (basePath: string) => {
-    if (basePath === "/") {
-      return pathname === basePath || pathname === "/";
+  const updateHash = useCallback(() => {
+    if (typeof window !== "undefined") {
+      setCurrentHash(window.location.hash);
     }
-    return pathname.startsWith(basePath);
+  }, []);
+
+  useEffect(() => {
+    updateHash();
+
+    window.addEventListener("hashchange", updateHash);
+    return () => {
+      window.removeEventListener("hashchange", updateHash);
+    };
+  }, [updateHash, pathname]);
+
+  const isLinkActive = (sectionId: string) => {
+    return pathname === "/" && currentHash === `#${sectionId}`;
   };
 
   const navLinks: NavLink[] = [
-    { name: "About", path: "/about" },
-    { name: "News", path: "/news" },
-    { name: "Publications", path: "/publications" },
-    { name: "Awards", path: "/awards" },
-    { name: "Experience", path: "/experience" },
-    { name: "Services", path: "/academic_services" },
+    { name: "About", path: "about" },
+    { name: "News", path: "news" },
+    { name: "Publications", path: "publications" },
+    { name: "Awards", path: "awards" },
+    { name: "Experience", path: "experience" },
+    { name: "Services", path: "academic_services" },
   ];
 
   return (
@@ -47,7 +59,7 @@ export default function Navbar() {
                 ? "px-4 py-2 bg-gray-300/80 text-black rounded-md "
                 : "px-4 py-2 text-bold text-gray-300 transition-all duration-300 ease-in-out hover:text-[#60a5fa]"
             }`}>
-            <Link href={`${link.path}`} scroll={false}>
+            <Link href={`/#${link.path}`} scroll={true}>
               {link.name}
             </Link>
           </li>
