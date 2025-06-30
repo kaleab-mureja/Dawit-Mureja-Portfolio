@@ -19,6 +19,7 @@ const NewsSchema = new Schema<INewsEntry>(
   },
   {
     timestamps: true, // This is crucial for automatic createdAt/updatedAt
+    collection: 'news'
   }
 );
 

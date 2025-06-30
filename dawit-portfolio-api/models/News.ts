@@ -23,7 +23,7 @@ const NewsSchema = new Schema<INews>({
     },
 }, {
   timestamps: true, 
-  collection: 'News', // Explicitly name the collection 'News'
+  collection: 'news', // Explicitly name the collection 'News'
 });
 
 const News = model<INews>('News', NewsSchema);

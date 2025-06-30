@@ -1,17 +1,18 @@
-import { redirect } from "next/navigation";
-import { EducationEntry, NewsEntry } from "../../types/index"; // <--- Import from types/index
+// app/education/page.tsx
+"use client";
 
-// Function to get base URL for internal API calls
+import { EducationEntry, NewsEntry } from "../../types/index";
+import { useState, useEffect } from "react";
+
 function getBaseUrl() {
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
-  // For local development, use localhost with port, defaulting to 3000
   return `http://localhost:${process.env.PORT || 3000}`;
 }
 
 async function getEducationData(): Promise<EducationEntry[]> {
-  const EDUCATION_URL = `${getBaseUrl()}/api/education`; // Construct URL for internal API
+  const EDUCATION_URL = `${getBaseUrl()}/api/education`;
 
   try {
     const res = await fetch(`${EDUCATION_URL}`);
@@ -46,7 +47,6 @@ async function getNewsData(): Promise<NewsEntry[]> {
 
     const processedData = data.map((item) => ({
       ...item,
-      // Issue 2: Type mismatch here if NewsEntry in types/index.ts is still 'string' for dates
       eventDate: item.eventDate ? new Date(item.eventDate) : undefined,
       createdAt: new Date(item.createdAt),
       updatedAt: new Date(item.updatedAt),
@@ -58,47 +58,89 @@ async function getNewsData(): Promise<NewsEntry[]> {
   }
 }
 
-export default async function Page({
+const NEWS_ITEMS_PER_PAGE = 3;
+
+export default function EducationAndNewsPage({
   searchParams = {},
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const newsData = await getNewsData();
-  const educationData = await getEducationData(); // Moved inside the component
+  const [educationData, setEducationData] = useState<EducationEntry[]>([]);
+  const [newsData, setNewsData] = useState<NewsEntry[]>([]);
+  const [loadingEducation, setLoadingEducation] = useState(true);
+  const [loadingNews, setLoadingNews] = useState(true);
+  const [errorEducation, setErrorEducation] = useState<string | null>(null);
+  const [errorNews, setErrorNews] = useState<string | null>(null);
 
-  const showAll = searchParams.show === "all";
+  const [currentNewsPage, setCurrentNewsPage] = useState(0);
 
-  let newsToDisplay: NewsEntry[] = [];
-  let showMoreButton = false;
-  let currentRemainingCount = 0;
-  const initialDisplayLimit = 3;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoadingEducation(true);
+        const eduData = await getEducationData();
+        setEducationData(eduData);
+      } catch (err) {
+        setErrorEducation("Failed to load education data.");
+        console.error(err);
+      } finally {
+        setLoadingEducation(false);
+      }
 
-  if (showAll) {
-    newsToDisplay = newsData;
-  } else {
-    newsToDisplay = newsData.slice(0, initialDisplayLimit);
-    if (newsData.length > initialDisplayLimit) {
-      showMoreButton = true;
-      currentRemainingCount = newsData.length - initialDisplayLimit;
+      try {
+        setLoadingNews(true);
+        const news = await getNewsData();
+        setNewsData(news);
+      } catch (err) {
+        setErrorNews("Failed to load news data.");
+        console.error(err);
+      } finally {
+        setLoadingNews(false);
+      }
     }
-  }
+    fetchData();
+  }, []);
 
-  async function showAllNewsAction() {
-    "use server";
-    redirect("/news?show=all");
-  }
+  const totalNewsPages = Math.ceil(newsData.length / NEWS_ITEMS_PER_PAGE);
+  const currentNewsStartIndex = currentNewsPage * NEWS_ITEMS_PER_PAGE;
+  const currentNewsEndIndex = currentNewsStartIndex + NEWS_ITEMS_PER_PAGE;
+  const newsToDisplay = newsData.slice(
+    currentNewsStartIndex,
+    currentNewsEndIndex
+  );
+
+  const goToNextNewsPage = () => {
+    setCurrentNewsPage((prevPage) =>
+      Math.min(prevPage + 1, totalNewsPages - 1)
+    );
+  };
+
+  const goToPreviousNewsPage = () => {
+    setCurrentNewsPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
+  const goToSpecificNewsPage = (pageIndex: number) => {
+    setCurrentNewsPage(pageIndex);
+  };
 
   return (
-    // Wrap all content in a single root element
     <div
       id="education"
-      className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10 ">
-      {/* Education Section */}
-      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
+      className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10"
+    >
+      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
         <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
           Education
         </h1>
-        {educationData.length > 0 ? (
+        {loadingEducation ? (
+          <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
+            Loading education data...
+          </p>
+        ) : errorEducation ? (
+          <p className="text-center text-red-400 mt-8 p-4 bg-red-700/50 rounded-lg">
+            Error: {errorEducation}
+          </p>
+        ) : educationData.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
             {educationData.map((entry) => (
               <div
@@ -107,7 +149,8 @@ export default async function Page({
                 bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-900
                 transform transition-all duration-300 ease-in-out
                 hover:shadow-2xl hover:bg-gray-900 hover:scale-[1.02] hover:border-blue-900
-              ">
+              "
+              >
                 <h2 className="text-md font-bold text-blue-300 mb-1">
                   {entry.degree}
                 </h2>
@@ -135,51 +178,112 @@ export default async function Page({
           </div>
         ) : (
           <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
-            Loading education data or no data available. Please ensure your
-            backend API is running and accessible.
+            No education data available.
           </p>
         )}
       </section>
 
-      {/* News & Updates Section */}
-      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl mx-auto">
+      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl mx-auto">
         <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
           News & Updates
         </h1>
         <hr className="border-gray-700 mb-4 mx-2" />
 
-        {newsData.length > 0 ? (
-          <div className="space-y-4 px-2">
-            {newsToDisplay.map((entry) => (
-              <div key={entry._id} className="flex items-start">
-                <span className="text-blue-400 text-xl leading-none mr-2 mt-0.5">
-                  •
-                </span>
-                <p className="text-base text-gray-300 leading-relaxed">
-                  {entry.content}
-                </p>
+        {loadingNews ? (
+          <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
+            Loading news data...
+          </p>
+        ) : errorNews ? (
+          <p className="text-center text-red-400 mt-8 p-4 bg-red-700/50 rounded-lg">
+            Error: {errorNews}
+          </p>
+        ) : newsData.length > 0 ? (
+          <>
+            <div className="relative mx-auto max-w-6xl">
+              <div
+                className="space-y-4 px-2
+                           transition-transform duration-500 ease-in-out"
+              >
+                {newsToDisplay.map((entry) => (
+                  <div key={entry._id} className="flex items-start">
+                    <span className="text-blue-400 text-xl leading-none mr-2 mt-0.5">
+                      •
+                    </span>
+                    <p className="text-base text-[14px] md:text-[16px] text-gray-300 leading-relaxed">
+                      {entry.content}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+
+              {totalNewsPages > 1 && (
+                <>
+                  <button
+                    onClick={goToPreviousNewsPage}
+                    disabled={currentNewsPage === 0}
+                    className={`
+                      absolute top-1/2 -left-9 md:-left-12 transform -translate-y-1/2
+                      w-10 h-10 flex items-center justify-center rounded-full
+                      text-white bg-gray-700/30
+                      backdrop-blur-sm
+                      border border-transparent
+                      hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300
+                      ${currentNewsPage === 0 ? "opacity-50 cursor-not-allowed" : ""}
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
+                      text-2xl
+                    `}
+                    aria-label="Previous news"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={goToNextNewsPage}
+                    disabled={currentNewsPage === totalNewsPages - 1}
+                    className={`
+                      absolute top-1/2 -right-9 transform -translate-y-1/2
+                      w-10 h-10 flex items-center justify-center rounded-full
+                      text-white bg-gray-700/30
+                      backdrop-blur-sm
+                      border border-transparent
+                      hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300
+                      ${currentNewsPage === totalNewsPages - 1 ? "opacity-50 cursor-not-allowed" : ""}
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
+                      text-2xl
+                    `}
+                    aria-label="Next news"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+
+            {totalNewsPages > 1 && (
+              <div className="flex justify-center space-x-2 mt-4">
+                {Array.from({ length: totalNewsPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSpecificNewsPage(index)}
+                    className={`
+                      w-1 h-2 rounded-full
+                      transition-all duration-300 ease-in-out
+                      ${
+                        index === currentNewsPage
+                          ? "bg-blue-500 scale-125"
+                          : "bg-gray-600 hover:bg-gray-500"
+                      }
+                      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
+                    `}
+                    aria-label={`Go to news page ${index + 1}`}
+                  ></button>
+                ))}
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
-            Loading news data or no data available. Please ensure your backend
-            API is running and accessible.
+            No news data available.
           </p>
-        )}
-
-        {showMoreButton && (
-          <div className="text-center mt-4">
-            <form action={showAllNewsAction}>
-              <button
-                type="submit"
-                className="border border-blue-500 text-blue-500 py-2 px-4 rounded-lg
-                           hover:bg-blue-500 hover:text-white transition-colors duration-200
-                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                Show More ({currentRemainingCount})
-              </button>
-            </form>
-          </div>
         )}
       </section>
     </div>

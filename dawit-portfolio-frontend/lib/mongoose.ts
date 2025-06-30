@@ -1,4 +1,4 @@
-// lib/mongoose.ts (Revised to prevent repeated connections)
+// lib/mongoose.ts 
 import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGO_URI;

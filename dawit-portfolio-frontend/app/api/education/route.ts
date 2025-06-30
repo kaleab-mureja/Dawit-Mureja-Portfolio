@@ -1,7 +1,7 @@
 // app/api/education/route.ts
 import { NextResponse } from "next/server"; // Use for App Router responses
 import dbConnect from "../../../lib/mongoose";
-import EducationModel, { IEducation } from "../../../models/Education";
+import EducationModel, { IEducationEntry } from "../../../models/Education";
 import { EducationEntry } from "../../../types";
 
 export async function GET() {

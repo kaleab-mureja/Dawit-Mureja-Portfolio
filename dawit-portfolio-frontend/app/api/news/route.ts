@@ -1,13 +1,13 @@
 // app/api/news/route.ts
 import { NextResponse } from "next/server";
 import dbConnect from "../../../lib/mongoose";
-import NewsModel, { INews } from "../../../models/News";
+import NewsModel, { INewsEntry } from "../../../models/News";
 import { NewsEntry } from "../../../types/index";
 
 export async function GET() {
   await dbConnect();
   try {
-    const news = await NewsModel.find({}).sort({ createdAt: -1 }).lean().exec();
+    const news = await NewsModel.find({}).lean().exec();
     const serializedNews: NewsEntry[] = news.map((entry) => ({
       ...entry,
       _id: entry._id.toString(),

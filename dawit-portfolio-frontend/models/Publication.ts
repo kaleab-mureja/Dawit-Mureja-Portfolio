@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Model } from "mongoose";
 
 // 1. Define the TypeScript interface for the Publication document
-export interface IPublication extends Document {
+export interface IPublicationEntry extends Document {
   image?: string; // New image field, optional, storing a URL
   title: string;
   authors: string[];
@@ -31,7 +31,7 @@ const PublicationSchema: Schema = new Schema(
     title: {
       type: String,
       required: [true, "Publication title is required."],
-      unique: true, // Assuming titles are unique
+      unique: true, // This already creates a unique index
       trim: true, // Removes whitespace from beginning/end
       minlength: [5, "Title must be at least 5 characters long."],
     },
@@ -58,15 +58,15 @@ const PublicationSchema: Schema = new Schema(
       type: Number,
       required: [true, "Publication year is required."],
       min: [1900, "Year must be after 1900."],
-      max: [new Date().getFullYear() + 5, "Year cannot be in the far future."], // Adjust max year as needed
+      max: [new Date().getFullYear() + 5, "Year cannot be in the far future."],
     },
     pdfLink: {
       type: String,
       trim: true,
       validate: {
         validator: function (v?: string) {
-          if (!v) return true; // Optional, so allow undefined/empty
-          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v); // Basic URL regex validation
+          if (!v) return true;
+          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
         },
         message: (props) => `${props.value} is not a valid URL for PDF Link!`,
       },
@@ -76,25 +76,26 @@ const PublicationSchema: Schema = new Schema(
       trim: true,
       validate: {
         validator: function (v?: string) {
-          if (!v) return true; // Optional, so allow undefined/empty
-          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v); // Basic URL regex validation
+          if (!v) return true;
+          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
         },
         message: (props) => `${props.value} is not a valid URL for Code Link!`,
       },
     },
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt fields automatically
+    timestamps: true,
+    collection: "publications",
   }
 );
 
-// Optional: Add an index to the title for faster lookups and unique enforcement
-PublicationSchema.index({ title: 1 }, { unique: true });
+// Removed: PublicationSchema.index({ title: 1 }, { unique: true });
+// The `unique: true` in the 'title' field definition already handles this.
 
 // 3. Create and Export the Mongoose Model
-const Publication = mongoose.model<IPublication>(
-  "Publication",
-  PublicationSchema
-);
+// Check if the model already exists to prevent OverwriteModelError
+const Publication: Model<IPublicationEntry> =
+  mongoose.models.Publication ||
+  mongoose.model<IPublicationEntry>("Publication", PublicationSchema);
 
 export default Publication;

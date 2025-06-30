@@ -22,3 +22,16 @@ export interface NewsEntry {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface PublicationEntry {
+  _id: string; 
+  image?: string;
+  title: string;
+  authors: string[];
+  conferenceOrJournal: string;
+  year: number;
+  pdfLink?: string;
+  codeLink?: string;
+  createdAt: string; 
+  updatedAt: string; 
+}
