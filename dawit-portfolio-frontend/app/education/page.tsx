@@ -1,37 +1,17 @@
 import { redirect } from "next/navigation";
-import Image from "next/image"; 
-import ProfilePic from "@/public/profilePic.jpg"; 
-import Link from "next/link"; 
+import { EducationEntry, NewsEntry } from "../../types/index"; // <--- Import from types/index
 
-interface EducationEntry {
-  _id: string;
-  degree: string;
-  university: string;
-  location: string;
-  startDate: string;
-  endDate: string;
-  gpa?: string;
-  thesis?: string;
-  advisors?: string[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface NewsEntry {
-  _id: string;
-  content: string;
-  eventDate?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+// Function to get base URL for internal API calls
+function getBaseUrl() {
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  // For local development, use localhost with port, defaulting to 3000
+  return `http://localhost:${process.env.PORT || 3000}`;
 }
 
 async function getEducationData(): Promise<EducationEntry[]> {
-  const EDUCATION_URL = process.env.EDUCATION_URI;
-
-  if (!EDUCATION_URL) {
-    console.error("EDUCATION_URI is not defined in .env.local");
-    return [];
-  }
+  const EDUCATION_URL = `${getBaseUrl()}/api/education`; // Construct URL for internal API
 
   try {
     const res = await fetch(`${EDUCATION_URL}`);
@@ -47,10 +27,8 @@ async function getEducationData(): Promise<EducationEntry[]> {
   }
 }
 
-const API_BASE_URL = process.env.API_URL || "http://localhost:5000";
-
 async function getNewsData(): Promise<NewsEntry[]> {
-  const NEWS_URL = process.env.NEWS_URI;
+  const NEWS_URL = `${getBaseUrl()}/api/news`;
 
   if (!NEWS_URL) {
     console.error("NEWS_URI is not defined in .env.local");
@@ -68,6 +46,7 @@ async function getNewsData(): Promise<NewsEntry[]> {
 
     const processedData = data.map((item) => ({
       ...item,
+      // Issue 2: Type mismatch here if NewsEntry in types/index.ts is still 'string' for dates
       eventDate: item.eventDate ? new Date(item.eventDate) : undefined,
       createdAt: new Date(item.createdAt),
       updatedAt: new Date(item.updatedAt),
@@ -111,11 +90,11 @@ export default async function Page({
 
   return (
     // Wrap all content in a single root element
-    <div id="education" className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10 ">
+    <div
+      id="education"
+      className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10 ">
       {/* Education Section */}
-      <section
-        id="education"
-        className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
+      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
         <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
           Education
         </h1>
@@ -163,8 +142,7 @@ export default async function Page({
       </section>
 
       {/* News & Updates Section */}
-      <section
-        className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl mx-auto">
+      <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl mx-auto">
         <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
           News & Updates
         </h1>

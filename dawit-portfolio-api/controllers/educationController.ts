@@ -1,10 +1,13 @@
-import { Request, Response } from 'express-serve-static-core';
-import Education, { IEducation } from '../models/Education'; // Adjust path if necessary
+import { Request, Response } from "express-serve-static-core";
+import Education, { IEducation } from "../models/Education"; // Adjust path if necessary
 
 // GET all Education entries
 export const getAllEducation = async (req: Request, res: Response) => {
   try {
-    const educationEntries: IEducation[] = await Education.find().sort({ endDate: -1, startDate: -1 });
+    const educationEntries: IEducation[] = await Education.find().sort({
+      endDate: -1,
+      startDate: -1,
+    });
     res.status(200).json(educationEntries);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -14,7 +17,9 @@ export const getAllEducation = async (req: Request, res: Response) => {
 // GET a single Education entry by ID
 export const getEducationById = async (req: Request, res: Response) => {
   try {
-    const educationItem: IEducation | null = await Education.findById(req.params.id);
+    const educationItem: IEducation | null = await Education.findById(
+      req.params.id
+    );
     if (!educationItem) {
       return res.status(404).json({ message: "Education entry not found" });
     }
@@ -26,7 +31,16 @@ export const getEducationById = async (req: Request, res: Response) => {
 
 // POST a new Education entry
 export const createEducation = async (req: Request, res: Response) => {
-  const { degree, university, location, startDate, endDate, gpa, thesis, advisors } = req.body;
+  const {
+    degree,
+    university,
+    location,
+    startDate,
+    endDate,
+    gpa,
+    thesis,
+    advisors,
+  } = req.body;
   const newEducationItem: IEducation = new Education({
     degree,
     university,
@@ -49,7 +63,16 @@ export const createEducation = async (req: Request, res: Response) => {
 // UPDATE an Education entry by ID (using PATCH for partial updates)
 export const updateEducation = async (req: Request, res: Response) => {
   try {
-    const { degree, university, location, startDate, endDate, gpa, thesis, advisors } = req.body;
+    const {
+      degree,
+      university,
+      location,
+      startDate,
+      endDate,
+      gpa,
+      thesis,
+      advisors,
+    } = req.body;
     const updateData: Partial<IEducation> = {};
 
     if (degree !== undefined) updateData.degree = degree;
@@ -61,11 +84,11 @@ export const updateEducation = async (req: Request, res: Response) => {
     if (thesis !== undefined) updateData.thesis = thesis;
     if (advisors !== undefined) updateData.advisors = advisors;
 
-    const updatedEducationItem: IEducation | null = await Education.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true, runValidators: true }
-    );
+    const updatedEducationItem: IEducation | null =
+      await Education.findByIdAndUpdate(req.params.id, updateData, {
+        new: true,
+        runValidators: true,
+      });
 
     if (!updatedEducationItem) {
       return res.status(404).json({ message: "Education entry not found" });
@@ -79,7 +102,8 @@ export const updateEducation = async (req: Request, res: Response) => {
 // DELETE an Education entry by ID
 export const deleteEducation = async (req: Request, res: Response) => {
   try {
-    const deletedEducationItem: IEducation | null = await Education.findByIdAndDelete(req.params.id);
+    const deletedEducationItem: IEducation | null =
+      await Education.findByIdAndDelete(req.params.id);
     if (!deletedEducationItem) {
       return res.status(404).json({ message: "Education entry not found" });
     }
