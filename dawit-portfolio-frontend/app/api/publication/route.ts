@@ -1,7 +1,7 @@
 // app/api/publication/route.ts
 import { NextResponse } from "next/server";
 import dbConnect from "../../../lib/mongoose";
-import PublicationModel, { IPublicationEntry } from "../../../models/Publication";
+import PublicationModel from "../../../models/Publication";
 // You'd also need a client-side type for PublicationEntry, e.g., in types/index.ts
 // export interface PublicationEntry { ... same fields as IPublicationEntry but dates as strings ... }
 import { PublicationEntry } from "../../../types/index"; // Assuming you define this
@@ -26,7 +26,7 @@ export async function GET() {
       codeLink: entry.codeLink || undefined,
     }));
     return NextResponse.json(serializedPublications, { status: 200 });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("API Error fetching publication data:", e);
     return NextResponse.json(
       {

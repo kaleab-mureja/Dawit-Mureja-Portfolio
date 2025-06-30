@@ -1,7 +1,7 @@
 // app/api/news/route.ts
 import { NextResponse } from "next/server";
 import dbConnect from "../../../lib/mongoose";
-import NewsModel, { INewsEntry } from "../../../models/News";
+import NewsModel from "../../../models/News";
 import { NewsEntry } from "../../../types/index";
 
 export async function GET() {
@@ -18,7 +18,7 @@ export async function GET() {
       updatedAt: (entry.updatedAt as Date).toISOString(),
     }));
     return NextResponse.json(serializedNews, { status: 200 });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("API Error fetching news data:", e);
     return NextResponse.json(
       {

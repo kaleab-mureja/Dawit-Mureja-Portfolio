@@ -1,7 +1,7 @@
 // app/api/education/route.ts
 import { NextResponse } from "next/server"; // Use for App Router responses
 import dbConnect from "../../../lib/mongoose";
-import EducationModel, { IEducationEntry } from "../../../models/Education";
+import EducationModel from "../../../models/Education";
 import { EducationEntry } from "../../../types";
 
 export async function GET() {
@@ -18,12 +18,12 @@ export async function GET() {
       updatedAt: entry.updatedAt.toISOString(),
     }));
     return NextResponse.json(serializedEducation, { status: 200 });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error("API Error fetching education data:", e);
     return NextResponse.json(
       {
         message: "Error fetching education data",
-        error: e.message || "Unknown error",
+        error:"Unknown error",
       },
       { status: 500 }
     );

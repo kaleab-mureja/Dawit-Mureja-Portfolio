@@ -1,4 +1,3 @@
-// app/education/page.tsx
 "use client";
 
 import { EducationEntry, NewsEntry } from "../../types/index";
@@ -61,7 +60,8 @@ async function getNewsData(): Promise<NewsEntry[]> {
 const NEWS_ITEMS_PER_PAGE = 3;
 
 export default function EducationAndNewsPage({
-  searchParams = {},
+  // The 'as any' should be on the value of searchParams, not the type definition
+  searchParams = {} as { [key: string]: string | string[] | undefined }, // <--- CORRECT PLACEMENT OF 'as any'
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
@@ -72,7 +72,8 @@ export default function EducationAndNewsPage({
   const [errorEducation, setErrorEducation] = useState<string | null>(null);
   const [errorNews, setErrorNews] = useState<string | null>(null);
 
-  const [currentNewsPage, setCurrentNewsPage] = useState(0);
+  const initialNewsPage = Number(searchParams.page) || 0;
+  const [currentNewsPage, setCurrentNewsPage] = useState(initialNewsPage);
 
   useEffect(() => {
     async function fetchData() {
@@ -126,8 +127,7 @@ export default function EducationAndNewsPage({
   return (
     <div
       id="education"
-      className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10"
-    >
+      className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
         <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
           Education
@@ -149,8 +149,7 @@ export default function EducationAndNewsPage({
                 bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-900
                 transform transition-all duration-300 ease-in-out
                 hover:shadow-2xl hover:bg-gray-900 hover:scale-[1.02] hover:border-blue-900
-              "
-              >
+              ">
                 <h2 className="text-md font-bold text-blue-300 mb-1">
                   {entry.degree}
                 </h2>
@@ -202,8 +201,7 @@ export default function EducationAndNewsPage({
             <div className="relative mx-auto max-w-6xl">
               <div
                 className="space-y-4 px-2
-                           transition-transform duration-500 ease-in-out"
-              >
+                           transition-transform duration-500 ease-in-out">
                 {newsToDisplay.map((entry) => (
                   <div key={entry._id} className="flex items-start">
                     <span className="text-blue-400 text-xl leading-none mr-2 mt-0.5">
@@ -228,12 +226,15 @@ export default function EducationAndNewsPage({
                       backdrop-blur-sm
                       border border-transparent
                       hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300
-                      ${currentNewsPage === 0 ? "opacity-50 cursor-not-allowed" : ""}
+                      ${
+                        currentNewsPage === 0
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }
                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
                       text-2xl
                     `}
-                    aria-label="Previous news"
-                  >
+                    aria-label="Previous news">
                     ‹
                   </button>
                   <button
@@ -246,12 +247,15 @@ export default function EducationAndNewsPage({
                       backdrop-blur-sm
                       border border-transparent
                       hover:bg-gray-700/50 hover:border-gray-600 transition-all duration-300
-                      ${currentNewsPage === totalNewsPages - 1 ? "opacity-50 cursor-not-allowed" : ""}
+                      ${
+                        currentNewsPage === totalNewsPages - 1
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }
                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
                       text-2xl
                     `}
-                    aria-label="Next news"
-                  >
+                    aria-label="Next news">
                     ›
                   </button>
                 </>
@@ -274,8 +278,7 @@ export default function EducationAndNewsPage({
                       }
                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75
                     `}
-                    aria-label={`Go to news page ${index + 1}`}
-                  ></button>
+                    aria-label={`Go to news page ${index + 1}`}></button>
                 ))}
               </div>
             )}
