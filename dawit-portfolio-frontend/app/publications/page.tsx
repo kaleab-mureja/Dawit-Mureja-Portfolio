@@ -89,7 +89,7 @@ export default function PublicationsPage() {
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
-          <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+          <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
             Publications
           </h1>
           <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
@@ -106,7 +106,7 @@ export default function PublicationsPage() {
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
-          <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+          <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
             Publications
           </h1>
           <p className="text-center text-red-400 mt-8 p-4 bg-red-700/50 rounded-lg">
@@ -122,9 +122,10 @@ export default function PublicationsPage() {
       id="publications"
       className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
-        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
           Publications
         </h1>
+        <hr className="border-gray-700 mb-4 mx-2" />
         {publications.length > 0 ? (
           <>
             <div

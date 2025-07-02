@@ -1,5 +1,5 @@
 // src/models/Award.ts
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Model } from "mongoose"; // Import 'Model'
 
 export interface IAward extends Document {
   title: string;
@@ -27,7 +27,7 @@ const AwardSchema: Schema = new Schema(
       type: Number,
       required: [true, "Award year is required."],
       min: [1900, "Year must be after 1900."],
-      max: [new Date().getFullYear() + 1, "Year cannot be in the future."],
+      max: [new Date().getFullYear() + 1, "Year cannot be in the future."], // Dynamically set max year
     },
   },
   {
@@ -37,6 +37,8 @@ const AwardSchema: Schema = new Schema(
 
 AwardSchema.index({ title: 1, year: 1, awardingBody: 1 }, { unique: true });
 
-const Award = mongoose.model<IAward>("Award", AwardSchema);
+const Award: Model<IAward> =
+  (mongoose.models.Award as Model<IAward>) || // Cast to Model<IAward> for type safety
+  mongoose.model<IAward>("Award", AwardSchema);
 
 export default Award;

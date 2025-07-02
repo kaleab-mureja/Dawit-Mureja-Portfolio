@@ -60,8 +60,7 @@ async function getNewsData(): Promise<NewsEntry[]> {
 const NEWS_ITEMS_PER_PAGE = 3;
 
 export default function EducationAndNewsPage({
-  // The 'as any' should be on the value of searchParams, not the type definition
-  searchParams = {} as { [key: string]: string | string[] | undefined }, // <--- CORRECT PLACEMENT OF 'as any'
+  searchParams = {} as { [key: string]: string | string[] | undefined }, 
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
@@ -129,7 +128,7 @@ export default function EducationAndNewsPage({
       id="education"
       className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
-        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
           Education
         </h1>
         {loadingEducation ? (
@@ -183,7 +182,7 @@ export default function EducationAndNewsPage({
       </section>
 
       <section className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl mx-auto">
-        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left">
+        <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
           News & Updates
         </h1>
         <hr className="border-gray-700 mb-4 mx-2" />

@@ -35,3 +35,11 @@ export interface PublicationEntry {
   createdAt: string; 
   updatedAt: string; 
 }
+
+export interface AwardEntry {
+  title: string;
+  awardingBody: string;
+  year: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
