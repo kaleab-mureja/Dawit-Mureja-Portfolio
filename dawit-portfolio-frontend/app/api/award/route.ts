@@ -7,10 +7,7 @@ import { AwardEntry } from "../../../types";
 export async function GET() {
   await dbConnect();
   try {
-    const award = await AwardModel.find({})
-      .sort({ year: -1 })
-      .lean()
-      .exec();
+    const award = await AwardModel.find({}).sort({ year: -1 }).lean().exec();
     const serializedEducation: AwardEntry[] = award.map((entry) => ({
       ...entry,
       _id: entry._id.toString(),
@@ -23,7 +20,7 @@ export async function GET() {
     return NextResponse.json(
       {
         message: "Error fetching award data",
-        error:"Unknown error",
+        error: "Unknown error",
       },
       { status: 500 }
     );

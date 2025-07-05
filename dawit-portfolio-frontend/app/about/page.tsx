@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default async function page() {
   return (
-    <div className=" md:h-[90vh] pt-20 flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 mb-20">
+    <div className=" md:h-[90vh] pt-25 flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 mb-20">
       <div className="hidden xl:block w-1/12"></div>
       <div className="md:w-1/3 ">
         <Image
@@ -18,7 +18,7 @@ export default async function page() {
         />
       </div>
       <div className="hidden xl:block w-1/12"></div>
-      <div className="flex flex-col sm:gap-2 lg:gap-0 xl:gap-2 text-slate-300 w-4/5 md:w-3/4">
+      <div className="flex flex-col lg:gap-0 xl:gap-2 text-slate-300 w-4/5 md:w-3/4">
         <h1 className="font-bold text-center md:text-left text-2xl md:text-3xl pb-4 text-[#60a5fa] ">
           Dawit Mureja Argaw
         </h1>

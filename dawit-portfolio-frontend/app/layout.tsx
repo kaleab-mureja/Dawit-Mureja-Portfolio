@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${robotoMono.variable}`}>
-        <main className="px-8 md:px-12 bg-gray-900">{children}</main>
+        <main className=" bg-gray-900">{children}</main>
       </body>
     </html>
   );

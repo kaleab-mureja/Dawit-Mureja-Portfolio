@@ -1,14 +1,14 @@
-// Your file path, e.g., src/models/Experience.ts
-import { Schema, model, Document, Model } from 'mongoose'; // Import 'Model'
+import { Schema, model, Document, Model, models } from "mongoose"; // Added 'models' to the import
 
 // Define the interface for the Experience document
 export interface IExperience extends Document {
+  image?: string;
   title: string;
   organization: string;
   location: string;
   startDate: string;
   endDate: string;
-  description?: string[]; // Optional array of strings
+  description?: string[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +16,18 @@ export interface IExperience extends Document {
 // Define the Mongoose Schema for Work Experience
 const ExperienceSchema: Schema = new Schema(
   {
+    image: {
+      type: String,
+      trim: true,
+      validate: {
+        validator: function (v?: string) {
+          if (!v) return true; // Optional, so allow undefined/empty
+          // Basic URL regex validation to ensure it's a valid link
+          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid URL for Image!`,
+      },
+    },
     title: {
       type: String,
       required: true,
@@ -43,17 +55,16 @@ const ExperienceSchema: Schema = new Schema(
     },
     description: {
       type: [String], // Array of strings
-      required: false, // It's already marked as optional in the interface, good to have it here too
+      required: false,
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
-// This is crucial for Next.js development with hot module reloading
 const Experience: Model<IExperience> =
-  (model.models.Experience as Model<IExperience>) || 
-  model<IExperience>('Experience', ExperienceSchema); 
+  (models.Experience as Model<IExperience>) ||
+  model<IExperience>("Experience", ExperienceSchema);
 
 export default Experience;

@@ -1,22 +1,25 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Model, models } from "mongoose"; // Added 'models' to the import
 
 // Define the interface for the Experience document
 export interface IExperience extends Document {
+  image: string;
   title: string;
   organization: string;
   location: string;
   startDate: string;
   endDate: string;
-  description?: string[];
+  description?: string[]; // Optional array of strings
   createdAt: Date;
   updatedAt: Date;
 }
 
-// Define the Experience schema
-
 // Define the Mongoose Schema for Work Experience
 const ExperienceSchema: Schema = new Schema(
   {
+    image: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -52,6 +55,8 @@ const ExperienceSchema: Schema = new Schema(
   }
 );
 
-const Experience = model<IExperience>('Experience', ExperienceSchema);
+const Experience: Model<IExperience> =
+  (models.Experience as Model<IExperience>) ||
+  model<IExperience>("Experience", ExperienceSchema);
 
 export default Experience;

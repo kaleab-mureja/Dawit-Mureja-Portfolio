@@ -7,24 +7,27 @@ import { NewsEntry } from "../../../types/index";
 export async function GET() {
   await dbConnect();
   try {
-    const news = await NewsModel.find({}).lean().exec();
-    const serializedNews: NewsEntry[] = news.map((entry) => ({
-      ...entry,
+    const newsData = await NewsModel.find({}).lean().exec();
+
+    const serializedNews: NewsEntry[] = newsData.map((entry) => ({
       _id: entry._id.toString(),
-      eventDate: entry.eventDate
-        ? (entry.eventDate as Date).toISOString()
-        : undefined,
+      content: entry.content,
+      eventDate: entry.eventDate ? (entry.eventDate as Date).toISOString() : undefined,
       createdAt: (entry.createdAt as Date).toISOString(),
       updatedAt: (entry.updatedAt as Date).toISOString(),
     }));
+
     return NextResponse.json(serializedNews, { status: 200 });
-  } catch (e: unknown) {
-    console.error("API Error fetching news data:", e);
+  } catch (error: unknown) {
+    console.error("API Error fetching news data:", error);
+    let message = "Error fetching news data.";
+    if (error instanceof Error) {
+      message = `Error fetching news data: ${error.message}`;
+    } else if (typeof error === "string") {
+      message = `Error fetching news data: ${error}`;
+    }
     return NextResponse.json(
-      {
-        message: "Error fetching news data",
-        error: e.message || "Unknown error",
-      },
+      { message: message },
       { status: 500 }
     );
   }

@@ -38,8 +38,7 @@ const newsSeedData: Partial<INews>[] = [
 
 const publicationsSeedData: Partial<IPublication>[] = [
   {
-    image:
-      "https://placehold.co/400x250/A3E635/000?text=MambaVision+for+Discrete...",
+    image: "https://placehold.co/400x250/A3E635/000?text=MambaVision",
     title:
       "MambaVision for Discrete Video Tokenization with Channel-Split Quantization",
     authors: [
@@ -55,7 +54,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/FF6347/FFF?text=High-Quality+Joint+Image...",
+      "https://placehold.co/400x250/FF6347/FFF?text=High-Quality+Joint+Image",
     title: "High-Quality Joint Image and Video Tokenization with Causal VAE",
     authors: [
       "Dawit Mureja Argaw",
@@ -71,8 +70,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://openreview.net/pdf?id=aRD1NqcXTC",
   },
   {
-    image:
-      "https://placehold.co/400x250/4682B4/FFF?text=Scaling+Up+Video+Summarization...",
+    image: "https://placehold.co/400x250/4682B4/FFF?text=Scaling+Up+Video",
     title:
       "Scaling Up Video Summarization Pretraining with Large Language Models",
     authors: [
@@ -92,7 +90,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/8A2BE2/FFF?text=Towards+Automated+Movie+Trailer...",
+      "https://placehold.co/400x250/8A2BE2/FFF?text=Towards+Automated+Movie+Trailer",
     title: "Towards Automated Movie Trailer Generation",
     authors: [
       "Dawit Mureja Argaw",
@@ -109,8 +107,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2404.03398.pdf",
   },
   {
-    image:
-      "https://placehold.co/400x250/DAA520/000?text=Long-range+Multimodal+Pretraining...",
+    image: "https://placehold.co/400x250/DAA520/000?text=Long-range+Multimodal",
     title: "Long-range Multimodal Pretraining for Movie Understanding",
     authors: [
       "Dawit Mureja Argaw",
@@ -126,7 +123,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/3CB371/FFF?text=The+Anatomy+of+Video+Editing...",
+      "https://placehold.co/400x250/3CB371/FFF?text=The+Anatomy+of+Video+Editing",
     title:
       "The Anatomy of Video Editing: A Dataset and Benchmark Suite for AI-Assisted Video Editing",
     authors: [
@@ -142,8 +139,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     codeLink: "https://github.com/dawitmureja/AVE",
   },
   {
-    image:
-      "https://placehold.co/400x250/BDB76B/000?text=Long-term+Video+Frame...",
+    image: "https://placehold.co/400x250/BDB76B/000?text=Long-term+Video+Frame",
     title: "Long-term Video Frame Interpolation via Feature Propagation",
     authors: ["Dawit Mureja Argaw", "In So Kweon"],
     conferenceOrJournal:
@@ -153,7 +149,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/CD5C5C/FFF?text=Motion-blurred+Video+Interpolation...",
+      "https://placehold.co/400x250/CD5C5C/FFF?text=Motion-blurred+Video+Interpolation",
     title: "Motion-blurred Video Interpolation and Extrapolation",
     authors: [
       "Dawit Mureja Argaw",
@@ -168,7 +164,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/ADD8E6/000?text=Optical+Flow+Estimation...",
+      "https://placehold.co/400x250/ADD8E6/000?text=Optical+Flow+Estimation",
     title: "Optical Flow Estimation from a Single Motion-blurred Image",
     authors: [
       "Dawit Mureja Argaw",
@@ -184,7 +180,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/DA70D6/FFF?text=Blurry+Video+Compression...",
+      "https://placehold.co/400x250/DA70D6/FFF?text=Blurry+Video+Compression",
     title:
       "Blurry Video Compression: A Trade-off between Visual Enhancement and Data Compression",
     authors: ["Dawit Mureja Argaw", "Junsik Kim", "In So Kweon"],
@@ -195,7 +191,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/20B2AA/FFF?text=Restoration+of+Video+Frames...",
+      "https://placehold.co/400x250/20B2AA/FFF?text=Restoration+of+Video+Frames",
     title:
       "Restoration of Video Frames from a Single Blurred Image with Motion Understanding",
     authors: [
@@ -211,8 +207,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
     pdfLink: "https://arxiv.org/pdf/2104.09134",
   },
   {
-    image:
-      "https://placehold.co/400x250/FFD700/000?text=Empirical+Study+on+Using...",
+    image: "https://placehold.co/400x250/FFD700/000?text=Empirical+Study",
     title:
       "Empirical Study on Using Adapters for Debiased Visual Question Answering",
     authors: [
@@ -228,8 +223,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://www.sciencedirect.com/science/article/abs/pii/S1077314223002229",
   },
   {
-    image:
-      "https://placehold.co/400x250/9370DB/FFF?text=LEMMS:+Label+Estimation...",
+    image: "https://placehold.co/400x250/9370DB/FFF?text=LEMMS",
     title: "LEMMS: Label Estimation of Multi-feature Movie Segments",
     authors: ["Bartolomeo Vacchetti", "Dawit Mureja Argaw", "Tania Cequtelli"],
     conferenceOrJournal:
@@ -239,8 +233,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://openaccess.thecvf.com/content/ICCV2023W/CVEU/papers/Vacchetti_LEMMS_Label_Estimation_of_Multi-Feature_Movie_Segments_ICCVW_2023_paper.pdf",
   },
   {
-    image:
-      "https://placehold.co/400x250/F08080/000?text=ResNet+or+DenseNet:...",
+    image: "https://placehold.co/400x250/F08080/000?text=ResNet+or+DenseNet",
     title: "ResNet or DenseNet: Introducing Shortcuts to ResNet",
     authors: [
       "Chaoning Zhang",
@@ -259,8 +252,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
       "https://openaccess.thecvf.com/content/WACV2021/papers/Zhang_ResNet_or_DenseNet_Introducing_Dense_Shortcuts_to_ResNet_WACV_2021_paper.pdf",
   },
   {
-    image:
-      "https://placehold.co/400x250/5F9EA0/FFF?text=DeePTZ:+Deep+Self-Calibration...",
+    image: "https://placehold.co/400x250/5F9EA0/FFF?text=DeePTZ",
     title: "DeePTZ: Deep Self-Calibration for PTZ Cameras",
     authors: [
       "Chaoning Zhang",
@@ -278,7 +270,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/DDA0DD/000?text=Revisiting+Residual+Networks...",
+      "https://placehold.co/400x250/DDA0DD/000?text=Revisiting+Residual+Networks",
     title: "Revisiting Residual Networks with Nonlinear Shortcuts",
     authors: [
       "Chaoning Zhang",
@@ -296,7 +288,7 @@ const publicationsSeedData: Partial<IPublication>[] = [
   },
   {
     image:
-      "https://placehold.co/400x250/98FB98/000?text=Automatic+Spine+Segmentation...",
+      "https://placehold.co/400x250/98FB98/000?text=Automatic+Spine+Segmentation",
     title:
       "Automatic Spine Segmentation from CT Images Using Convolutional Neural Network via Redundant Generation of Class Labels",
     authors: ["Dawit Mureja Argaw", "Malinda Vania", "Deukhee Lee"],
@@ -370,6 +362,7 @@ const awardsSeedData: Partial<IAward>[] = [
 
 const workExperiencesSeedData: Partial<IExperience>[] = [
   {
+    image: "https://logotyp.us/file/kaist.svg",
     title: "Postdoctoral Researcher",
     organization: "Multimodal AI Lab, KAIST",
     location: "Daejeon, South Korea",
@@ -380,6 +373,7 @@ const workExperiencesSeedData: Partial<IExperience>[] = [
     ],
   },
   {
+    image: "https://logotyp.us/file/nvidia.svg",
     title: "Research Intern",
     organization: "NVIDIA",
     location: "Santa Clara, CA, USA (Remote)",
@@ -391,6 +385,7 @@ const workExperiencesSeedData: Partial<IExperience>[] = [
     ],
   },
   {
+    image: "https://logotyp.us/file/adobe.svg",
     title: "Research Intern",
     organization: "Adobe",
     location: "San Jose, CA, USA",
@@ -402,6 +397,8 @@ const workExperiencesSeedData: Partial<IExperience>[] = [
     ],
   },
   {
+    image:
+      "https://images.seeklogo.com/logo-png/31/2/king-abdullah-university-of-science-kaust-logo-png_seeklogo-311328.png",
     title: "Research Intern",
     organization: "KAUST",
     location: "Thuwal, Saudi Arabia (Remote)",
@@ -413,6 +410,7 @@ const workExperiencesSeedData: Partial<IExperience>[] = [
     ],
   },
   {
+    image: "https://logotyp.us/file/adobe.svg",
     title: "Research Intern",
     organization: "Adobe",
     location: "San Jose, CA, USA (Remote)",
@@ -424,6 +422,7 @@ const workExperiencesSeedData: Partial<IExperience>[] = [
     ],
   },
   {
+    image: "https://logotyp.us/file/kaist.svg",
     title: "Graduate Research Assistant",
     organization: "KAIST",
     location: "Daejeon, South Korea",

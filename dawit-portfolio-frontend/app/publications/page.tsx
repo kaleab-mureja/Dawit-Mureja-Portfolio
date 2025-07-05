@@ -1,4 +1,3 @@
-// app/publications/page.tsx
 "use client"; // This directive makes the component a Client Component
 
 import { PublicationEntry } from "../../types/index";
@@ -88,7 +87,7 @@ export default function PublicationsPage() {
       <section
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
-        <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
+        <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
           <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
             Publications
           </h1>
@@ -105,7 +104,7 @@ export default function PublicationsPage() {
       <section
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
-        <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-6xl shadow-xl">
+        <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-xl shadow-xl">
           <h1 className="text-xl md:text-2xl font-extrabold text-[#60a5fa] mb-4 md:mb-6 text-center md:text-left mx-2">
             Publications
           </h1>
@@ -142,14 +141,16 @@ export default function PublicationsPage() {
                     hover:shadow-2xl hover:bg-gray-900 hover:scale-[1.02] hover:border-blue-900
                   ">
                   {pub.image && (
-                    <div className="mb-4 w-full">
+                    <div className="mb-4 w-full h-60 relative">
                       <Image
-                        src={pub.image}
+                        src={
+                          pub.image ||
+                          "https://placehold.co/600x400/DDA0DD/000?text=Placeholder"
+                        }
                         alt={`Thumbnail for ${pub.title}`}
-                        width={300} // Example width. Adjust as needed. This will be capped by the column width.
-                        height={200} // Example height. Adjust as needed.
-                        className="rounded-lg object-cover w-full h-auto" // Ensures image fills container width, maintains aspect ratio
-                        unoptimized={pub.image.startsWith("http")} // Use unoptimized for external URLs if you don't configure remote patterns
+                        fill
+                        className="rounded-lg object-cover object-center"
+                        unoptimized={pub.image.startsWith("http")}
                       />
                     </div>
                   )}
@@ -202,8 +203,7 @@ export default function PublicationsPage() {
               ))}
             </div>
 
-            {/* Pagination Controls */}
-            {totalPages > 1 && ( // Only show controls if there's more than one page
+            {totalPages > 1 && (
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
                 <button
                   onClick={goToPreviousPage}
@@ -226,7 +226,7 @@ export default function PublicationsPage() {
                       key={index}
                       onClick={() => goToPage(index)}
                       className={`
-                        w-2 h-3 rounded-full
+                        w-1 h-2 md:w-2 md:h-3 rounded-full
                         transition-all duration-300 ease-in-out
                         ${
                           index === currentPage

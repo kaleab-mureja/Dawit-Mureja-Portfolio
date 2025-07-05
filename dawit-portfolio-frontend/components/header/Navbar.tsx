@@ -40,29 +40,29 @@ export default function Navbar() {
     { name: "Publications", path: "publications" },
     { name: "Awards", path: "awards" },
     { name: "Experience", path: "experience" },
-    { name: "Services", path: "academic_services" },
+    { name: "Services", path: "service" },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-gray-900 px-2 lg:px-8 py-2 md:py-4">
+    <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-gray-900 px-2 lg:px-8 py-2 py-4">
       <Link
         href="/"
         className="text-2xl text-slate-300 px-4 font-bold hover:text-[#60a5fa]">
         Portfolio
       </Link>
-
       <ul className="hidden md:flex bg-gray-400/25 rounded-lg md:mx-auto px-1 py-1 gap-x-2">
         {navLinks.map((link) => (
-            <Link key={link.name}
-              className={`${
-                isLinkActive(link.path)
-                  ? "px-4 py-2 bg-gray-300/80 text-black rounded-md "
-                  : "px-4 py-2 text-bold text-gray-300 transition-all duration-300 ease-in-out hover:text-[#60a5fa]"
-              }`}
-              href={`/#${link.path}`}
-              scroll={true}>
-              {link.name}
-            </Link>
+          <Link
+            key={link.name}
+            className={`${
+              isLinkActive(link.path)
+                ? "px-4 py-2 bg-gray-300/80 text-black rounded-md "
+                : "px-4 py-2 text-bold text-gray-300 transition-all duration-300 ease-in-out hover:text-[#60a5fa]"
+            }`}
+            href={`/#${link.path}`}
+            scroll={true}>
+            {link.name}
+          </Link>
         ))}
       </ul>
 

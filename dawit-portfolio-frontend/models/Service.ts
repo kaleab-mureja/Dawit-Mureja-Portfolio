@@ -1,20 +1,16 @@
-// src/models/Service.ts
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, Document, model } from "mongoose"; // Import mongoose itself
 
-// Define a sub-interface for the individual service details,
 export interface IServiceDetail {
   item: string;
 }
 
-// Define the TypeScript Interface for the Service document.
 export interface IService extends Document {
-  category: string; // e.g., "Journal Reviewer", "Conference Reviewer", "Student Volunteer"
-  details: IServiceDetail[]; // An array holding specific items/roles within the category
+  category: string;
+  details: IServiceDetail[];
   createdAt: Date;
   updatedAt: Date;
 }
 
-// Define the Mongoose Schema for Service.
 const serviceSchema = new Schema<IService>(
   {
     category: {
@@ -38,6 +34,8 @@ const serviceSchema = new Schema<IService>(
   }
 );
 
-const Service = model<IService>("Service", serviceSchema);
+// Check if the model already exists on the main mongoose object
+const Service =
+  mongoose.models.Service || model<IService>("Service", serviceSchema);
 
 export default Service;
