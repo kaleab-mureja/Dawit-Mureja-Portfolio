@@ -1,24 +1,22 @@
-"use client"; // This directive makes the component a Client Component
+"use client";
 
 import { PublicationEntry } from "../../types/index";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 
-// Function to get base URL for internal API calls
 function getBaseUrl() {
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
-  // For local development, use localhost with port, defaulting to 3000
-  return `http://localhost:${process.env.PORT || 3000}`;
+  return `http://localhost:3000`;
 }
 
 async function getPublicationData(): Promise<PublicationEntry[]> {
   const PUBLICATIONS_URL = `${getBaseUrl()}/api/publication`;
 
   try {
-    const res = await fetch(PUBLICATIONS_URL, { cache: "no-store" }); // No cache for dynamic data
+    const res = await fetch(PUBLICATIONS_URL, { cache: "no-store" });
     if (!res.ok) {
       const errorBody = await res.text();
       console.error(
@@ -30,18 +28,22 @@ async function getPublicationData(): Promise<PublicationEntry[]> {
       );
     }
     const data: PublicationEntry[] = await res.json();
-    return data;
+    const serializedData = data.map((entry) => ({
+      ...entry,
+      _id: entry._id.toString(),
+    }));
+    return serializedData;
   } catch (error) {
     console.error("Error fetching publication data:", error);
-    return []; // Return empty array on error to prevent crashing
+    return [];
   }
 }
 
-const ITEMS_PER_PAGE = 6; // Define how many publications to show per page
+const ITEMS_PER_PAGE = 6;
 
-export default function PublicationsPage() {
+const PublicationPage = forwardRef<HTMLElement>((props, ref) => {
   const [publications, setPublications] = useState<PublicationEntry[]>([]);
-  const [currentPage, setCurrentPage] = useState(0); // Current page index (0-based)
+  const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,15 +63,12 @@ export default function PublicationsPage() {
     fetchData();
   }, []);
 
-  // Calculate total pages
   const totalPages = Math.ceil(publications.length / ITEMS_PER_PAGE);
 
-  // Get publications for the current page
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentPublications = publications.slice(startIndex, endIndex);
 
-  // Handlers for navigation
   const goToNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
@@ -85,6 +84,7 @@ export default function PublicationsPage() {
   if (loading) {
     return (
       <section
+        ref={ref}
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -102,6 +102,7 @@ export default function PublicationsPage() {
   if (error) {
     return (
       <section
+        ref={ref}
         id="publications"
         className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-xl shadow-xl">
@@ -118,6 +119,7 @@ export default function PublicationsPage() {
 
   return (
     <section
+      ref={ref}
       id="publications"
       className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -129,13 +131,12 @@ export default function PublicationsPage() {
           <>
             <div
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6
-                         transition-transform duration-500 ease-in-out" // Added transition for smooth page change
-            >
+                          transition-transform duration-500 ease-in-out">
               {currentPublications.map((pub) => (
                 <div
                   key={pub._id}
                   className="
-                    flex flex-col // Make card content stack vertically
+                    flex flex-col
                     bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-900
                     transform transition-all duration-300 ease-in-out
                     hover:shadow-2xl hover:bg-gray-900 hover:scale-[1.02] hover:border-blue-900
@@ -264,4 +265,8 @@ export default function PublicationsPage() {
       </div>
     </section>
   );
-}
+});
+
+PublicationPage.displayName = "PublicationPage"; 
+
+export default PublicationPage;

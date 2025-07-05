@@ -1,14 +1,14 @@
 "use client";
 
 import { ExperienceEntry } from "../../types/index";
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import Image from "next/image";
 
 function getBaseUrl() {
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
-  return `http://localhost:${process.env.PORT || 3000}`;
+  return `http://localhost:3000`;
 }
 
 async function getExperienceData(): Promise<ExperienceEntry[]> {
@@ -27,8 +27,12 @@ async function getExperienceData(): Promise<ExperienceEntry[]> {
       );
     }
     const data: ExperienceEntry[] = await res.json();
-    return data;
-  } catch (error: unknown) {
+    const serializedData = data.map((entry) => ({
+      ...entry,
+      _id: entry._id.toString(),
+    }));
+    return serializedData;
+  } catch (error) {
     console.error("Error fetching experience data:", error);
     let errorMessage = "Failed to load experience data.";
     if (error instanceof Error) {
@@ -40,7 +44,7 @@ async function getExperienceData(): Promise<ExperienceEntry[]> {
   }
 }
 
-export default function ExperiencePage() {
+const ExperiencePage = forwardRef<HTMLElement>((props, ref) => {
   const [experiences, setExperiences] = useState<ExperienceEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +65,7 @@ export default function ExperiencePage() {
           return dateB.getTime() - dateA.getTime();
         });
         setExperiences(sortedData);
-      } catch (err: unknown) {
+      } catch (err) {
         let errorMessage = "Failed to load experience data.";
         if (err instanceof Error) {
           errorMessage = err.message;
@@ -87,6 +91,7 @@ export default function ExperiencePage() {
   if (loading) {
     return (
       <section
+        ref={ref}
         id="experience"
         className="py-20 md:py-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -104,6 +109,7 @@ export default function ExperiencePage() {
   if (error) {
     return (
       <section
+        ref={ref}
         id="experience"
         className="py-20 md:py-30 flex flex-col justify-center items-center gap-5 md:gap-10">
         <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -120,6 +126,7 @@ export default function ExperiencePage() {
 
   return (
     <section
+      ref={ref}
       id="experience"
       className="py-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -131,7 +138,7 @@ export default function ExperiencePage() {
           <>
             <div
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6
-                         transition-transform duration-500 ease-in-out">
+                          transition-transform duration-500 ease-in-out">
               {experiences.map((exp) => (
                 <div
                   key={exp._id}
@@ -198,4 +205,8 @@ export default function ExperiencePage() {
       </div>
     </section>
   );
-}
+});
+
+ExperiencePage.displayName = "ExperiencePage"; 
+
+export default ExperiencePage;

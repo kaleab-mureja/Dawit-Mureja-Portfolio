@@ -1,12 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, forwardRef } from "react";
 import { AwardEntry } from "../../types/index";
 
 const getBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
-  return `http://localhost:${process.env.PORT || 3000}`;
+  return `http://localhost:3000`;
 };
 
 const getAwardData = async (): Promise<AwardEntry[]> => {
@@ -15,8 +16,11 @@ const getAwardData = async (): Promise<AwardEntry[]> => {
   try {
     const res = await fetch(`${AWARD_URL}`);
     if (!res.ok) {
+      const errorBody = await res.text();
       throw new Error(
-        `Failed to fetch award data: ${res.statusText} (Status: ${res.status})`
+        `Failed to fetch award data: ${res.statusText} (Status: ${
+          res.status
+        }) - Body: ${errorBody.substring(0, 200)}`
       );
     }
     const data: AwardEntry[] = await res.json();
@@ -25,8 +29,7 @@ const getAwardData = async (): Promise<AwardEntry[]> => {
       _id: entry._id.toString(),
     }));
     return serializedData;
-  } catch (error: unknown) {
-    // Use unknown for catch block errors
+  } catch (error) {
     console.error("Error fetching award data:", error);
     let errorMessage = "Unknown error occurred while fetching award data.";
     if (error instanceof Error) {
@@ -38,7 +41,7 @@ const getAwardData = async (): Promise<AwardEntry[]> => {
   }
 };
 
-export default function AwardPage() {
+const AwardPage = forwardRef<HTMLElement>((props, ref) => {
   const [awardData, setAwardData] = useState<AwardEntry[]>([]);
   const [loadingAward, setLoadingAward] = useState(true);
   const [errorAward, setErrorAward] = useState<string | null>(null);
@@ -49,8 +52,7 @@ export default function AwardPage() {
         setLoadingAward(true);
         const data = await getAwardData();
         setAwardData(data);
-      } catch (err: unknown) {
-        // Use unknown for catch block errors
+      } catch (err) {
         let errorMessage = "Failed to load award data.";
         if (err instanceof Error) {
           errorMessage = err.message;
@@ -68,6 +70,7 @@ export default function AwardPage() {
 
   return (
     <section
+      ref={ref}
       id="awards"
       className="pt-20 md:pt-30 flex flex-col justify-center items-center gap-5 md:gap-10">
       <div className="bg-gray-800/25 rounded-lg w-full p-4 max-w-7xl shadow-xl">
@@ -100,7 +103,6 @@ export default function AwardPage() {
             ))}
           </div>
         ) : (
-          // This 'else' part is for when awardData.length is 0
           <p className="text-center text-gray-400 mt-8 p-4 bg-gray-700/50 rounded-lg">
             No award data available.
           </p>
@@ -108,4 +110,8 @@ export default function AwardPage() {
       </div>
     </section>
   );
-}
+});
+
+AwardPage.displayName = "AwardPage"; 
+
+export default AwardPage;

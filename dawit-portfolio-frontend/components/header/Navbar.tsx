@@ -2,54 +2,26 @@
 
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useCallback, useEffect, useState } from "react";
 
 interface NavLink {
   name: string;
   path: string;
 }
 
-export default function Navbar() {
-  const pathname = usePathname();
-  const [currentHash, setCurrentHash] = useState("");
+interface NavbarProps {
+  navLinks: NavLink[];
+  isLinkActive: (sectionId: string) => boolean;
+}
 
-  const updateHash = useCallback(() => {
-    if (typeof window !== "undefined") {
-      const newHash = window.location.hash;
-      setCurrentHash(newHash);
-    }
-  }, []);
-
-  useEffect(() => {
-    updateHash();
-
-    window.addEventListener("hashchange", updateHash);
-    return () => {
-      window.removeEventListener("hashchange", updateHash);
-    };
-  }, [updateHash]);
-
-  const isLinkActive = (sectionId: string) => {
-    return pathname === "/" && currentHash === `#${sectionId}`;
-  };
-
-  const navLinks: NavLink[] = [
-    { name: "About", path: "about" },
-    { name: "Education", path: "education" },
-    { name: "Publications", path: "publications" },
-    { name: "Awards", path: "awards" },
-    { name: "Experience", path: "experience" },
-    { name: "Services", path: "service" },
-  ];
-
+export default function Navbar({ navLinks, isLinkActive }: NavbarProps) {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-gray-900 px-2 lg:px-8 py-2 py-4">
+    <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center bg-gray-900 px-2 lg:px-8 py-4">
       <Link
         href="/"
         className="text-2xl text-slate-300 px-4 font-bold hover:text-[#60a5fa]">
         Portfolio
       </Link>
+
       <ul className="hidden md:flex bg-gray-400/25 rounded-lg md:mx-auto px-1 py-1 gap-x-2">
         {navLinks.map((link) => (
           <Link

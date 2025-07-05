@@ -1,12 +1,16 @@
+"use client";
+
+import { forwardRef } from "react";
 import Image from "next/image";
 import ProfilePic from "@/public/profilePic.jpg";
 import Link from "next/link";
 
-// Define the interface for Education Data
-
-export default async function page() {
+const AboutPage = forwardRef<HTMLElement>((props, ref) => {
   return (
-    <div className=" md:h-[90vh] pt-25 flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 mb-20">
+    <div
+      ref={ref}
+      id="about"
+      className="md:h-[87vh] pt-20 flex flex-col md:flex-row-reverse justify-between items-center h-full gap-10 mb-20">
       <div className="hidden xl:block w-1/12"></div>
       <div className="md:w-1/3 ">
         <Image
@@ -18,7 +22,7 @@ export default async function page() {
         />
       </div>
       <div className="hidden xl:block w-1/12"></div>
-      <div className="flex flex-col lg:gap-0 xl:gap-2 text-slate-300 w-4/5 md:w-3/4">
+      <div className="flex flex-col lg:gap-0 gap-2 text-slate-300 w-4/5 md:w-3/4">
         <h1 className="font-bold text-center md:text-left text-2xl md:text-3xl pb-4 text-[#60a5fa] ">
           Dawit Mureja Argaw
         </h1>
@@ -37,7 +41,7 @@ export default async function page() {
           generative modeling, particularly for long-form media content.
         </p>
 
-        <div className="flex justify-center flex-wrap  items-center gap-4 mt-4 ">
+        <div className="flex justify-center flex-wrap items-center gap-4 mt-4 ">
           <Link
             href="https://dawitmureja.github.io/cv/cv_dawit.pdf"
             className="flex gap-2 border-2 border-[#60a5fa] text-slate-200 rounded-lg px-4 py-2 bg-[#60a5fa]/50 hover:bg-[#60a5fa] hover:text-white transition-colors duration-200">
@@ -98,4 +102,8 @@ export default async function page() {
       <div className="hidden xl:block w-1/12"></div>
     </div>
   );
-}
+});
+
+AboutPage.displayName = "AboutPage"; 
+
+export default AboutPage;
