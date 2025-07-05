@@ -24,10 +24,10 @@ const LinkedInIcon = () => (
 const TwitterXIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+    viewBox="0 -2 12 20"
     fill="currentColor"
     className="w-5 h-5 mr-1">
-    <path d="M18.244 2.25h.308l-5.188 5.617L21.75 22H18.89l-4.706-5.093L7.257 22H6.95l5.053-5.503L2.25 2.25h2.88l3.65 4.9L12 2.25h1.244zm-2.88 2.915L5.292 20H8.38l7.928-17.5H15.364z" />
+    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
   </svg>
 );
 
@@ -47,8 +47,8 @@ export default function Footer() {
             <EmailIcon />
             <span>Email</span>
           </Link>
-          <Link
-            href="https://www.linkedin.com/in/your-linkedin-profile" // REPLACE WITH YOUR LINKEDIN PROFILE URL
+          <Link 
+            href="https://www.linkedin.com/in/dawit-mureja-argaw-6b891911b/" // REPLACE WITH YOUR LINKEDIN PROFILE URL
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center hover:text-blue-300 transition-colors duration-200"
@@ -57,7 +57,7 @@ export default function Footer() {
             <span>LinkedIn</span>
           </Link>
           <Link
-            href="https://twitter.com/your-twitter-handle" // REPLACE WITH YOUR TWITTER PROFILE URL (now X)
+            href="https://x.com/dawit_mureja"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center hover:text-blue-300 transition-colors duration-200"

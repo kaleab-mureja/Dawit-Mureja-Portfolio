@@ -1,13 +1,12 @@
-// app/api/services/route.ts
 import { NextResponse } from "next/server";
 import dbConnect from "../../../lib/mongoose";
 import ServiceModel from "../../../models/Service";
-import { IService } from "../../../types";
+import { IService } from "../../../types"; // Assuming IService is correctly defined here
 
 export async function GET() {
   await dbConnect();
   try {
-    let services: any[] = await ServiceModel.find({}).lean().exec();
+    const services: IService[] = await ServiceModel.find({}).lean().exec();
 
     const serializedServices: IService[] = services.map((entry) => ({
       _id: entry._id.toString(),
